@@ -8,13 +8,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class GameBoardComponent implements OnInit {
 
-  readonly numRows = 8;
-  readonly numColumns = 8;
+  readonly boardSize = 10;
 
-  readonly rowNums = Array(this.numRows).fill(0).map((x, i) => i);
-  readonly colNums = Array(this.numColumns).fill(0).map((x, i) => i);
-
-  readonly grid = Array(this.numRows).fill(null).map(() => Array(this.numColumns).fill(null));
+  readonly rows = Array(this.boardSize).fill(0).map((x, i) => 10 - i);
+  readonly columns = Array(this.boardSize).fill(0).map((x, i) => String.fromCharCode(65 + i));
 
   constructor() { }
 

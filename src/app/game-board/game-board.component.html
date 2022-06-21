@@ -16,25 +16,25 @@
 <div class="board-container">
   <div class="col-numbers">
     <div class="number-cell"
-         *ngFor="let col of colNums">{{ colNumToLetter(col) }}</div>
+         *ngFor="let column of columns">{{ column }}</div>
   </div>
   <div class="row-numbers">
     <div class="number-cell"
-         *ngFor="let row of rowNums">{{ row + 1 }}</div>
+         *ngFor="let row of rows">{{ row }}</div>
   </div>
   <div class="game-board">
-    <ng-container *ngFor="let row of rowNums">
-      <div [id]="'square-' + row + '-' + col"
-           *ngFor="let col of colNums"
-           [ngClass]="{'white-square': (row + col) % 2, 'black-square': !((row + col) % 2)}"></div>
+    <ng-container *ngFor="let row of rows; index as rIdx">
+      <div [id]="'square-' + row + '-' + column"
+           *ngFor="let column of columns; index as cIdx"
+           [ngClass]="{'white-square': !((rIdx + cIdx) % 2), 'black-square': (rIdx + cIdx) % 2}"></div>
     </ng-container>
   </div>
   <div class="row-numbers">
     <div class="number-cell"
-         *ngFor="let row of rowNums">{{ row + 1 }}</div>
+         *ngFor="let row of rows">{{ row }}</div>
   </div>
   <div class="col-numbers">
     <div class="number-cell"
-         *ngFor="let col of colNums">{{ colNumToLetter(col) }}</div>
+         *ngFor="let column of columns">{{ column }}</div>
   </div>
 </div>
