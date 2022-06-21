@@ -1,0 +1,62 @@
+
+$square-size: 75px;
+$board-border-width: 2px;
+$number-cell-size: 40px;
+
+$white-cell-color: #F4D49E;//#F0F0F0;
+$black-cell-color: #A35030;//#1A1D21;
+
+.number-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+  color: #fff;
+  font-size: 22px;
+}
+
+.board-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  width: 8 * $square-size + 2 * $board-border-width + 2 * $number-cell-size;
+  height: 8 * $square-size + 2 * $board-border-width + 2 * $number-cell-size;
+
+  background-color: $black-cell-color;//#855E42;
+
+  .col-numbers {
+    display: grid;
+    grid-template-columns: repeat(8, $square-size);
+    grid-template-rows: $number-cell-size;
+
+    margin: 0 $board-border-width + $number-cell-size;
+
+  }
+
+  .row-numbers {
+    display: grid;
+    grid-template-columns: $number-cell-size;
+    grid-template-rows: repeat(8, $square-size);
+
+  }
+
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(8, $square-size);
+  grid-template-rows: repeat(8, $square-size);
+
+
+  border: $board-border-width solid $white-cell-color;
+
+  .black-square {
+    background-color: $black-cell-color;
+  }
+
+  .white-square {
+    background-color: $white-cell-color;
+  }
+
+}

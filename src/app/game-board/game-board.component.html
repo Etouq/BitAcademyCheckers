@@ -1,0 +1,40 @@
+<!--<div class="game-board">-->
+<!--  <div></div>-->
+<!--  <div *ngFor="let col of colNums" class="row-col-number">{{ colNumToLetter(col) }}</div>-->
+<!--  <div></div>-->
+<!--  <ng-container *ngFor="let row of rowNums">-->
+<!--    <div class="row-col-number">{{ row + 1 }}</div>-->
+<!--    <div class="board-square" *ngFor="let col of colNums" [id]="'square-' + row + '-' + col"-->
+<!--         [ngStyle]="{'background-color': (row + col) % 2 ? '#f0f0f0' : '#1A1D21'}"></div>-->
+<!--    <div class="row-col-number">{{ row + 1 }}</div>-->
+<!--  </ng-container>-->
+<!--  <div></div>-->
+<!--  <div *ngFor="let col of colNums" class="row-col-number">{{ colNumToLetter(col) }}</div>-->
+<!--  <div></div>-->
+<!--</div>-->
+
+<div class="board-container">
+  <div class="col-numbers">
+    <div class="number-cell"
+         *ngFor="let col of colNums">{{ colNumToLetter(col) }}</div>
+  </div>
+  <div class="row-numbers">
+    <div class="number-cell"
+         *ngFor="let row of rowNums">{{ row + 1 }}</div>
+  </div>
+  <div class="game-board">
+    <ng-container *ngFor="let row of rowNums">
+      <div [id]="'square-' + row + '-' + col"
+           *ngFor="let col of colNums"
+           [ngClass]="{'white-square': (row + col) % 2, 'black-square': !((row + col) % 2)}"></div>
+    </ng-container>
+  </div>
+  <div class="row-numbers">
+    <div class="number-cell"
+         *ngFor="let row of rowNums">{{ row + 1 }}</div>
+  </div>
+  <div class="col-numbers">
+    <div class="number-cell"
+         *ngFor="let col of colNums">{{ colNumToLetter(col) }}</div>
+  </div>
+</div>
