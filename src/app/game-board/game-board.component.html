@@ -1,40 +1,46 @@
-<!--<div class="game-board">-->
-<!--  <div></div>-->
-<!--  <div *ngFor="let col of colNums" class="row-col-number">{{ colNumToLetter(col) }}</div>-->
-<!--  <div></div>-->
-<!--  <ng-container *ngFor="let row of rowNums">-->
-<!--    <div class="row-col-number">{{ row + 1 }}</div>-->
-<!--    <div class="board-square" *ngFor="let col of colNums" [id]="'square-' + row + '-' + col"-->
-<!--         [ngStyle]="{'background-color': (row + col) % 2 ? '#f0f0f0' : '#1A1D21'}"></div>-->
-<!--    <div class="row-col-number">{{ row + 1 }}</div>-->
-<!--  </ng-container>-->
-<!--  <div></div>-->
-<!--  <div *ngFor="let col of colNums" class="row-col-number">{{ colNumToLetter(col) }}</div>-->
-<!--  <div></div>-->
-<!--</div>-->
-
-<div class="board-container">
+<div
+  class="board-container"
+  id="board-container">
   <div class="col-numbers">
-    <div class="number-cell"
-         *ngFor="let column of columns">{{ column }}</div>
+    <div
+      class="number-cell"
+      *ngFor="let column of columns">{{ column }}</div>
   </div>
   <div class="row-numbers">
-    <div class="number-cell"
-         *ngFor="let row of rows">{{ row }}</div>
+    <div
+      class="number-cell"
+      *ngFor="let row of rows">{{ row }}</div>
   </div>
   <div class="game-board">
     <ng-container *ngFor="let row of rows; index as rIdx">
-      <div [id]="'square-' + row + '-' + column"
-           *ngFor="let column of columns; index as cIdx"
-           [ngClass]="{'white-square': !((rIdx + cIdx) % 2), 'black-square': (rIdx + cIdx) % 2}"></div>
+      <div
+        [id]="'square-' + row + '-' + column"
+        *ngFor="let column of columns; index as cIdx"
+        (click)="makeMove('square-' + row + '-' + column)"
+        [ngClass]="{'white-square': !((rIdx + cIdx) % 2), 'black-square': (rIdx + cIdx) % 2, 'highlighted':
+        highlightedCells.has('square-' + row + '-' + column)}">
+      </div>
     </ng-container>
   </div>
   <div class="row-numbers">
-    <div class="number-cell"
-         *ngFor="let row of rows">{{ row }}</div>
+    <div
+      class="number-cell"
+      *ngFor="let row of rows">{{ row }}</div>
   </div>
   <div class="col-numbers">
-    <div class="number-cell"
-         *ngFor="let column of columns">{{ column }}</div>
+    <div
+      class="number-cell"
+      *ngFor="let column of columns">{{ column }}</div>
   </div>
 </div>
+
+<app-game-piece
+  *ngFor="let piece of whitePieces; index as idx"
+  [white]="true"
+  [cellId]="piece.position.identifier"
+  (click)="highlightMoves(piece)"></app-game-piece>
+<app-game-piece
+  *ngFor="let piece of blackPieces; index as idx"
+  [white]="false"
+  [cellId]="piece.position.identifier"
+  (click)="highlightMoves(piece)"></app-game-piece>

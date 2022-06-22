@@ -18,8 +18,9 @@ $black-cell-color: #A35030;//#1A1D21;
 }
 
 .board-container {
-  display: flex;
+  display: inline flex;
   flex-flow: row wrap;
+  position: relative;
 
   width: $number-of-squares * $square-size + 2 * $board-border-width + 2 * $number-cell-size;
   height: $number-of-squares * $square-size + 2 * $board-border-width + 2 * $number-cell-size;
@@ -49,15 +50,24 @@ $black-cell-color: #A35030;//#1A1D21;
   grid-template-columns: repeat($number-of-squares, $square-size);
   grid-template-rows: repeat($number-of-squares, $square-size);
 
-
   border: $board-border-width solid $white-cell-color;
 
   .black-square {
     background-color: $black-cell-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .white-square {
     background-color: $white-cell-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .highlighted {
+    background-color: fuchsia !important;
   }
 
 }
