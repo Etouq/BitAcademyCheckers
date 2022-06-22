@@ -13,10 +13,10 @@ export class MoveGenerator {
    */
   static generateMoves(piece: GamePiece): MoveSet[] {
     if (piece.isKing) {
-      return MoveGenerator.generateKingMovesFromSet(new MoveSet(piece.position), piece);
+      return MoveGenerator.generateKingMovesFromSet(new MoveSet([piece.position]), piece);
     }
 
-    return MoveGenerator.generateMovesFromSet(new MoveSet(piece.position), piece);
+    return MoveGenerator.generateMovesFromSet(new MoveSet([piece.position]), piece);
   }
 
   /**
@@ -45,14 +45,12 @@ export class MoveGenerator {
 
       // if we did not jump a piece the move ends
       if (!move.jumpedPiece) {
-        validMoves.push(new MoveSet(move.endPoint));
+        validMoves.push(MoveSet.newMoveSetFrom(moveSet, move.endPoint));
         continue;
       }
 
       // if we jumped a piece, continue checking moves from this point
-      const newMoveSet = new MoveSet(move.endPoint, moveSet.jumpedPieces);
-      newMoveSet.jumpedPieces.add(move.jumpedPiece);
-      validMoves.push(...MoveGenerator.generateMovesFromSet(newMoveSet, piece));
+      validMoves.push(...MoveGenerator.generateMovesFromSet(MoveSet.newMoveSetFrom(moveSet, move.endPoint, move.jumpedPiece), piece));
     }
 
     if (validMoves.length === 0) {
@@ -90,15 +88,13 @@ export class MoveGenerator {
 
       // if we did not jump a piece the move ends
       if (!move.jumpedPiece) {
-        validMoves.push(...move.validMoves.map(m => new MoveSet(m)));
+        validMoves.push(...move.validMoves.map(moveEndpoint => MoveSet.newMoveSetFrom(moveSet, moveEndpoint)));
         continue;
       }
 
       // if we jumped a piece, continue checking moves from this point
       for (const endPoint of move.validMoves) {
-        const newMoveSet = new MoveSet(endPoint, moveSet.jumpedPieces);
-        newMoveSet.jumpedPieces.add(move.jumpedPiece);
-        validMoves.push(...MoveGenerator.generateKingMovesFromSet(newMoveSet, piece));
+        validMoves.push(...MoveGenerator.generateKingMovesFromSet(MoveSet.newMoveSetFrom(moveSet, endPoint, move.jumpedPiece), piece));
       }
     }
 
