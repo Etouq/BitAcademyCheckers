@@ -1,9 +1,51 @@
-<svg id="piece-element" class="piece-svg" viewBox="50 50 100 100" overflow="visible"
-     [ngStyle]="{ 'left.px': centerX, 'top.px': centerY, 'offset-path': animationPath }"
-     xmlns="http://www.w3.org/2000/svg" [ngClass]="{'animate': animating }" (animationend)="animationDone()">
-  <circle cx="50" cy="50" r="50" [attr.fill]="white ? '#f0f0f0' : '#1a1d21'"/>
-  <circle cx="50" cy="50" r="40" fill="transparent" [attr.stroke]="white ? '#1a1d21' : '#f0f0f0'" stroke-width="2"/>
-  <circle cx="50" cy="50" r="30" fill="transparent" [attr.stroke]="white ? '#1a1d21' : '#f0f0f0'" stroke-width="2"/>
-  <circle cx="50" cy="50" r="20" fill="transparent" [attr.stroke]="white ? '#1a1d21' : '#f0f0f0'" stroke-width="2"/>
+<svg
+  id="piece-element"
+  class="piece-svg"
+  viewBox="50 50 100 100"
+  overflow="visible"
+  (click)="onPieceClicked()"
+  [ngStyle]="{ 'left.px': centerX, 'top.px': centerY, 'offset-path': animationPath, 'animation-duration.ms': animationDuration }"
+  xmlns="http://www.w3.org/2000/svg"
+  [ngClass]="{'animate': animating }"
+  (animationend)="animationDone()">
+  <circle
+    *ngIf="isActivePiece"
+    cx="50"
+    cy="50"
+    r="53"
+    fill="fuchsia"/>
+  <circle
+    cx="50"
+    cy="50"
+    r="50"
+    [attr.fill]="piece.white ? '#F0F0F0' : '#1A1D21'"/>
+  <circle
+    cx="50"
+    cy="50"
+    r="40"
+    fill="transparent"
+    [attr.stroke]="piece.white ? '#1A1D21' : '#F0F0F0'"
+    stroke-width="2"/>
+  <circle
+    cx="50"
+    cy="50"
+    r="30"
+    fill="transparent"
+    [attr.stroke]="piece.white ? '#1A1D21' : '#F0F0F0'"
+    stroke-width="2"/>
+  <circle
+    cx="50"
+    cy="50"
+    r="20"
+    fill="transparent"
+    [attr.stroke]="piece.white ? '#1A1D21' : '#F0F0F0'"
+    stroke-width="2"/>
+  <path
+    *ngIf="piece.isKing"
+    [attr.fill]="piece.white ? '#1A1D21' : '#F0F0F0'"
+    [attr.stroke]="piece.white ? '#F0F0F0' :
+  '#1A1D21'"
+    stroke-width="2"
+    d="M 62.48 61.52 H 37.52 C 36.992 61.52 36.56 61.952 36.56 62.48 V 64.4 C 36.56 64.928 36.992 65.36 37.52 65.36 H 62.48 C 63.008 65.36 63.44 64.928 63.44 64.4 V 62.48 C 63.44 61.952 63.008 61.52 62.48 61.52 Z M 66.32 42.32 C 64.73 42.32 63.44 43.61 63.44 45.2 C 63.44 45.626 63.536 46.022 63.704 46.388 L 59.36 48.992 C 58.436 49.544 57.242 49.232 56.708 48.296 L 51.818 39.74 C 52.46 39.212 52.88 38.42 52.88 37.52 C 52.88 35.93 51.59 34.64 50 34.64 S 47.12 35.93 47.12 37.52 C 47.12 38.42 47.54 39.212 48.182 39.74 L 43.292 48.296 C 42.758 49.232 41.558 49.544 40.64 48.992 L 36.302 46.388 C 36.464 46.028 36.566 45.626 36.566 45.2 C 36.566 43.61 35.276 42.32 33.686 42.32 S 30.8 43.61 30.8 45.2 S 32.09 48.08 33.68 48.08 C 33.836 48.08 33.992 48.056 34.142 48.032 L 38.48 59.6 H 61.52 L 65.858 48.032 C 66.008 48.056 66.164 48.08 66.32 48.08 C 67.91 48.08 69.2 46.79 69.2 45.2 S 67.91 42.32 66.32 42.32 Z"/>
 </svg>
 

@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { GamePiece } from "../game-logic/game-piece";
+import { MoveSet } from "../game-logic/move-set";
 
 @Component({
   selector: 'app-game-piece',
@@ -7,30 +9,23 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class GamePieceComponent implements OnInit {
 
-  @Input() white!: boolean;
+  @Output() pieceClicked: EventEmitter<GamePieceComponent> = new EventEmitter();
+  @Output() moveCompleted: EventEmitter<MoveSet> = new EventEmitter();
 
-  @Input() set cellId(id: string) {
+  isActivePiece = false;
 
-    const clientRect = document.getElementById(id)!.getBoundingClientRect();
-    const boardContainerRect = document.getElementById('board-container')!.getBoundingClientRect();
-
-    this.newCenterX = clientRect.left - boardContainerRect.left + clientRect.width / 2;
-    this.newCenterY = clientRect.top - boardContainerRect.top + clientRect.height / 2;
-
-    if (!this.centerX) {
-      this.centerX = this.newCenterX;
-      this.centerY = this.newCenterY;
-      return;
-    }
-
-    this.animationPath = `path('M0,0 L${this.newCenterX - this.centerX},${this.newCenterY - this.centerY}')`;
-
-    this.animating = true;
-
+  private _piece!: GamePiece;
+  get piece(): GamePiece {
+    return this._piece;
   }
+  @Input() set piece(piece: GamePiece) {
+    [this.centerX, this.centerY] = piece.position.getCenterCoordinates();
+    this._piece = piece;
+  };
 
   animationPath = "path('M0,0')";
   animating = false;
+  animationDuration = 500;
 
   centerX!: number;
   centerY!: number;
@@ -38,15 +33,45 @@ export class GamePieceComponent implements OnInit {
   private newCenterX = 0;
   private newCenterY = 0;
 
+  private moveSet?: MoveSet;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  executeMoveSet(moveSet: MoveSet) {
+    this.moveSet = moveSet;
+
+    [this.newCenterX, this.newCenterY] = moveSet.endPosition.getCenterCoordinates();
+
+    this.animationDuration = (moveSet.moves.length - 1) * 500;
+
+    this.animationPath = `path('M0,0`;
+
+    // skip starting position
+    for (let idx = 1; idx < moveSet.moves.length; idx++) {
+      const [x, y] = moveSet.moves[idx].getCenterCoordinates();
+      this.animationPath += ` L${x - this.centerX},${y - this.centerY}`;
+    }
+
+    this.animationPath += `')`;
+
+    this.animating = true;
+  }
+
+  onPieceClicked() {
+    this.pieceClicked.emit(this);
   }
 
   animationDone() {
     this.animating = false;
     this.centerX = this.newCenterX;
     this.centerY = this.newCenterY;
+
+    this.piece.moveTo(this.moveSet!.endPosition);
+    this.moveCompleted.emit(this.moveSet!);
+    this.moveSet = undefined;
   }
 
 }

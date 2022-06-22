@@ -4,18 +4,18 @@
   <div class="col-numbers">
     <div
       class="number-cell"
-      *ngFor="let column of columns">{{ column }}</div>
+      *ngFor="let column of gameRunner.columns">{{ column }}</div>
   </div>
   <div class="row-numbers">
     <div
       class="number-cell"
-      *ngFor="let row of rows">{{ row }}</div>
+      *ngFor="let row of gameRunner.rows">{{ row }}</div>
   </div>
   <div class="game-board">
-    <ng-container *ngFor="let row of rows; index as rIdx">
+    <ng-container *ngFor="let row of gameRunner.rows; index as rIdx">
       <div
         [id]="'square-' + row + '-' + column"
-        *ngFor="let column of columns; index as cIdx"
+        *ngFor="let column of gameRunner.columns; index as cIdx"
         (click)="makeMove('square-' + row + '-' + column)"
         [ngClass]="{'white-square': !((rIdx + cIdx) % 2), 'black-square': (rIdx + cIdx) % 2, 'highlighted':
         highlightedCells.has('square-' + row + '-' + column)}">
@@ -25,22 +25,22 @@
   <div class="row-numbers">
     <div
       class="number-cell"
-      *ngFor="let row of rows">{{ row }}</div>
+      *ngFor="let row of gameRunner.rows">{{ row }}</div>
   </div>
   <div class="col-numbers">
     <div
       class="number-cell"
-      *ngFor="let column of columns">{{ column }}</div>
+      *ngFor="let column of gameRunner.columns">{{ column }}</div>
   </div>
 </div>
 
 <app-game-piece
-  *ngFor="let piece of whitePieces"
-  [white]="true"
-  [cellId]="piece.position.identifier"
-  (click)="highlightMoves(piece)"></app-game-piece>
+  *ngFor="let piece of gameRunner.whitePieces"
+  [piece]="piece"
+  (pieceClicked)="highlightComponentMoves($event)"
+  (moveCompleted)="onMoveAnimationEnd($event)"></app-game-piece>
 <app-game-piece
-  *ngFor="let piece of blackPieces"
-  [white]="false"
-  [cellId]="piece.position.identifier"
-  (click)="highlightMoves(piece)"></app-game-piece>
+  *ngFor="let piece of gameRunner.blackPieces"
+  [piece]="piece"
+  (pieceClicked)="highlightComponentMoves($event)"
+  (moveCompleted)="onMoveAnimationEnd($event)"></app-game-piece>

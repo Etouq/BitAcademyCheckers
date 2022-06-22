@@ -17,6 +17,16 @@ export class GameSquare {
     this.identifier = identifier;
   }
 
+  getCenterCoordinates(): [number, number] {
+    const squareElementRect = (document.getElementById(this.identifier) as HTMLElement).getBoundingClientRect();
+    const boardContainerRect = (document.getElementById('board-container') as HTMLElement).getBoundingClientRect();
+
+    return [
+      squareElementRect.left - boardContainerRect.left + squareElementRect.width / 2,
+      squareElementRect.top - boardContainerRect.top + squareElementRect.height / 2
+    ];
+  }
+
   getSquareInDirection(direction: MoveDirection): GameSquare | undefined {
     switch (direction) {
       case MoveDirection.LEFT_UP:
