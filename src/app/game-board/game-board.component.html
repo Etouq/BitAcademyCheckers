@@ -50,7 +50,7 @@
   (pieceClicked)="highlightComponentMoves($event)"
   (moveCompleted)="onMoveAnimationEnd($event)"></app-game-piece>
 
-<div style="display: inline-block;">
-  <p style="display: inline-block">Current Player: {{ gameRunner.currentPlayerWhite ? "White" : "Black" }}</p>
+<div style="display: inline-block; vertical-align:top">
+  <p style="display: inline">Current Player: {{ gameRunner.currentPlayerWhite ? "White" : "Black" }}</p><br>
   <button (click)="resetGame()">Reset</button>
 </div>

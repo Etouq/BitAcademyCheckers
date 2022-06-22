@@ -18,7 +18,6 @@ export class GameBoardComponent implements OnInit {
   private activePieceComponent: GamePieceComponent | undefined;
 
 
-
   gameRunner = new GameRunner();
 
   constructor() { }
@@ -64,7 +63,12 @@ export class GameBoardComponent implements OnInit {
   highlightComponentMoves(pieceComponent: GamePieceComponent): void {
 
     if (this.gameRunner.currentPlayerWhite !== pieceComponent.piece.white) {
-      this.clearHighlightedCells();
+      pieceComponent.cannotMovePiece = true;
+      return;
+    }
+
+    if ((this.gameRunner.activeMoves.get(pieceComponent.piece) ?? []).length === 0) {
+      pieceComponent.cannotMovePiece = true;
       return;
     }
 

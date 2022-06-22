@@ -14,6 +14,8 @@ export class GamePieceComponent implements OnInit {
 
   isActivePiece = false;
 
+  cannotMovePiece = false;
+
   private _piece!: GamePiece;
   get piece(): GamePiece {
     return this._piece;
@@ -60,11 +62,18 @@ export class GamePieceComponent implements OnInit {
     this.animating = true;
   }
 
+
+
   onPieceClicked() {
     this.pieceClicked.emit(this);
   }
 
   animationDone() {
+    if (this.cannotMovePiece) {
+      this.cannotMovePiece = false;
+      return;
+    }
+
     this.animating = false;
     this.centerX = this.newCenterX;
     this.centerY = this.newCenterY;

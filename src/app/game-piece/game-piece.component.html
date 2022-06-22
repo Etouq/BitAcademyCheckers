@@ -6,7 +6,7 @@
   (click)="onPieceClicked()"
   [ngStyle]="{ 'left.px': centerX, 'top.px': centerY, 'offset-path': animationPath, 'animation-duration.ms': animationDuration }"
   xmlns="http://www.w3.org/2000/svg"
-  [ngClass]="{'animate': animating }"
+  [ngClass]="{'animate': animating, 'cannot-move': cannotMovePiece }"
   (animationend)="animationDone()">
   <circle
     *ngIf="isActivePiece"

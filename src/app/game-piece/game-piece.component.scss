@@ -12,10 +12,20 @@
 .piece-svg.animate {
   //animation: move 500ms 1 normal ease-in-out;
   animation-name: move;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: cubic-bezier(.36,.18,.69,.91);
   animation-iteration-count: 1;
   animation-direction: normal;
   z-index: 500;
+}
+
+.piece-svg.cannot-move {
+  //animation: move 500ms 1 normal ease-in-out;
+  animation-name: shake;
+  animation-timing-function: cubic-bezier(.36,.07,.19,.97);
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-duration: 820ms;
 }
 
 @keyframes move {
@@ -24,5 +34,23 @@
   }
   100% {
     offset-distance: 100%;
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
   }
 }
