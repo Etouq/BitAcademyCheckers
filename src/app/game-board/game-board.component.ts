@@ -38,22 +38,19 @@ export class GameBoardComponent implements OnInit {
     this.activePieceComponent!.isActivePiece = false;
     this.activePieceComponent!.executeMoveSet(moveSet);
 
-    this.highlightedCells = new Map<string, MoveSet>();
+    this.clearHighlightedCells();
   }
 
   onMoveAnimationEnd(moveSet: MoveSet): void {
-    moveSet.jumpedPieces.forEach(piece => piece.removeFromBoard());
-
-    if (this.activePieceComponent!.piece.white) {
-      this.gameRunner.blackPieces = this.gameRunner.blackPieces.filter((piece) => !moveSet.jumpedPieces.has(piece));
-    }
-    else {
-      this.gameRunner.whitePieces = this.gameRunner.whitePieces.filter((piece) => !moveSet.jumpedPieces.has(piece));
-    }
-
-    this.gameRunner.generateMoves(!this.activePieceComponent!.piece.white);
+    // update game state
+    this.gameRunner.executeMove(moveSet);
 
     this.activePieceComponent = undefined;
+  }
+
+  resetGame(): void {
+    this.clearHighlightedCells();
+    this.gameRunner.resetGame();
   }
 
   clearHighlightedCells(): void {
@@ -65,6 +62,11 @@ export class GameBoardComponent implements OnInit {
   }
 
   highlightComponentMoves(pieceComponent: GamePieceComponent): void {
+
+    if (this.gameRunner.currentPlayerWhite !== pieceComponent.piece.white) {
+      this.clearHighlightedCells();
+      return;
+    }
 
     if (this.activePieceComponent) {
       this.activePieceComponent.isActivePiece = false;

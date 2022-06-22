@@ -18,6 +18,10 @@ export class GameRunner {
   // list of all allowed moves for the current player, indexed by the piece that makes them
   activeMoves = new Map<GamePiece, MoveSet[]>();
 
+  currentPlayerWhite: boolean = true;
+
+  // when true, the current player is the winner
+  gameOver: boolean = false;
 
   // list of all pieces still in game for each side
   whitePieces!: GamePiece[];
@@ -27,7 +31,51 @@ export class GameRunner {
     this.setupSquares();
     this.resetPieces();
 
-    this.generateMoves(true);
+    this.generateMoves(this.currentPlayerWhite);
+  }
+
+  resetGame(): void {
+    this.resetPieces();
+    this.gameOver = false;
+    this.currentPlayerWhite = true;
+    this.generateMoves(this.currentPlayerWhite);
+  }
+
+  executeMove(move: MoveSet): void {
+    // remove the jumped pieces
+    for (const jumpedPiece of move.jumpedPieces) {
+      jumpedPiece.removeFromBoard();
+    }
+
+    // remove the jumped pieces from the list of pieces
+    if (this.currentPlayerWhite) {
+      this.blackPieces = this.blackPieces.filter(p => !move.jumpedPieces.has(p));
+      if (this.blackPieces.length == 0) { // if the other player has no pieces left, the current player wins
+        this.gameOver = true;
+      }
+    }
+    else {
+      this.whitePieces = this.whitePieces.filter(p => !move.jumpedPieces.has(p));
+      if (this.whitePieces.length == 0) {
+        this.gameOver = true;
+      }
+    }
+
+    if (!this.gameOver) {
+      // generate moves for the next player
+      this.generateMoves(!this.currentPlayerWhite);
+    }
+
+    // if no moves are possible it's game over
+    if (this.activeMoves.size == 0) {
+      this.gameOver = true;
+    }
+
+    // if not game over, switch to the next player
+    if (!this.gameOver) {
+      this.currentPlayerWhite = !this.currentPlayerWhite;
+    }
+
   }
 
   /**

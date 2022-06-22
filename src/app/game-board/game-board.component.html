@@ -1,5 +1,10 @@
+<div id="overlay" *ngIf="gameRunner.gameOver" (click)="resetGame()">
+  <div id="text">{{ gameRunner.currentPlayerWhite ? "White" : "Black" }} Player Wins</div>
+</div>
+
 <div
   class="board-container"
+  (click)="clearHighlightedCells()"
   id="board-container">
   <div class="col-numbers">
     <div
@@ -44,3 +49,8 @@
   [piece]="piece"
   (pieceClicked)="highlightComponentMoves($event)"
   (moveCompleted)="onMoveAnimationEnd($event)"></app-game-piece>
+
+<div style="display: inline-block;">
+  <p style="display: inline-block">Current Player: {{ gameRunner.currentPlayerWhite ? "White" : "Black" }}</p>
+  <button (click)="resetGame()">Reset</button>
+</div>
