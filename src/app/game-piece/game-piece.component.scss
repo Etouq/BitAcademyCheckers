@@ -5,4 +5,19 @@
   height: 60px;
 
   position: absolute;
+  transform-origin: top left;
+
+}
+
+.piece-svg.animate {
+  animation: move 1500ms 1 normal ease-in-out;
+}
+
+@keyframes move {
+  0% {
+    offset-distance: 0;
+  }
+  100% {
+    offset-distance: 100%;
+  }
 }

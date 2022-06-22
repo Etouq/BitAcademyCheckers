@@ -35,12 +35,12 @@
 </div>
 
 <app-game-piece
-  *ngFor="let piece of whitePieces; index as idx"
+  *ngFor="let piece of whitePieces"
   [white]="true"
   [cellId]="piece.position.identifier"
   (click)="highlightMoves(piece)"></app-game-piece>
 <app-game-piece
-  *ngFor="let piece of blackPieces; index as idx"
+  *ngFor="let piece of blackPieces"
   [white]="false"
   [cellId]="piece.position.identifier"
   (click)="highlightMoves(piece)"></app-game-piece>
