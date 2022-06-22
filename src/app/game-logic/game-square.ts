@@ -3,6 +3,7 @@ import { MoveDirection } from "./move-direction";
 
 export class GameSquare {
 
+  // identifier of the html element that represents this square
   readonly identifier: string;
 
   piece?: GamePiece;

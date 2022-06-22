@@ -7,9 +7,6 @@ export class GamePiece {
   get white(): boolean {
     return this._white;
   }
-  get black(): boolean {
-    return !this.white;
-  }
 
   private _isKing = false;
 

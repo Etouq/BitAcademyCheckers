@@ -19,7 +19,6 @@
 }
 
 .piece-svg.cannot-move {
-  //animation: move 500ms 1 normal ease-in-out;
   animation-name: shake;
   animation-timing-function: cubic-bezier(.36,.07,.19,.97);
   animation-iteration-count: 1;

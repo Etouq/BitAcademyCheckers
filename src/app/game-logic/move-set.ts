@@ -3,7 +3,6 @@ import { GameSquare } from "./game-square";
 
 export class MoveSet {
 
-
   get endPosition(): GameSquare {
     return this.moves[this.moves.length - 1];
   }

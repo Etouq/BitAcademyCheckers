@@ -1,4 +1,3 @@
-// defined in clockwise direction such that (direction + 2) % 4 will yield the opposite direction
 export const enum MoveDirection {
   LEFT_UP,
   RIGHT_UP,
